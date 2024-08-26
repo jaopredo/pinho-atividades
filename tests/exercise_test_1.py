@@ -23,24 +23,38 @@ class ExerciseTest1(unittest.TestCase):
             {"nome": "Alice", "notas": [0, 0, 0], "curso": "Matemática"},
 	    	{"nome": "Bob", "notas": [6.0, 5.5, 4.0], "curso": "Física"},
 		    {"nome": "Charlie", "notas": [3.5, 2.0, 1.0], "curso": "Computação"}
-        ]), None)
+        ]), [])
 
     def testNoArgumentsPassed(self):
-        self.assertRaises(TypeError, filtrar_aprovados())
+        self.assertRaises(TypeError, filtrar_aprovados)
     
     def testNotAListPassed(self):
-        self.assertRaises(TypeError, filtrar_aprovados('olá'))
-        self.assertRaises(TypeError, filtrar_aprovados(5))
-        self.assertRaises(TypeError, filtrar_aprovados(True))
-        self.assertRaises(TypeError, filtrar_aprovados({
-            'a': 'a', 'b': 'b'
-        }))
-        self.assertRaises(TypeError, filtrar_aprovados((
-            'a', 'b', 'c'
-        )))
-        self.assertRaises(TypeError, filtrar_aprovados({
-            'a', 'b', 'c'
-        }))
+        with self.assertRaises(TypeError) as context1:
+            filtrar_aprovados('olá')
+        with self.assertRaises(TypeError) as context2:
+            filtrar_aprovados(5)
+        with self.assertRaises(TypeError) as context3:
+            filtrar_aprovados(True)
+        with self.assertRaises(TypeError) as context4:
+            filtrar_aprovados({
+                'a': 'a', 'b': 'b'
+            })
+        with self.assertRaises(TypeError) as context5:
+            filtrar_aprovados((
+                'a', 'b', 'c'
+            ))
+        with self.assertRaises(TypeError) as context6:
+            filtrar_aprovados({
+                'a', 'b', 'c'
+            })
+
+        self.assertTrue(isinstance(context1.exception, TypeError))
+        self.assertTrue(isinstance(context2.exception, TypeError))
+        self.assertTrue(isinstance(context3.exception, TypeError))
+        self.assertTrue(isinstance(context4.exception, TypeError))
+        self.assertTrue(isinstance(context5.exception, TypeError))
+        self.assertTrue(isinstance(context6.exception, TypeError))
+
     
     def testAListOfNotDictionaries(self):
         self.assertRaises(TypeError, filtrar_aprovados([
